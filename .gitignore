@@ -274,3 +274,6 @@ MailHog
 self_service_portal_j/media/
 
 .pytest_cache/
+
+### My secret vars
+.vars

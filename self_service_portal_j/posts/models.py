@@ -50,6 +50,12 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = _("Post")
+        verbose_name_plural = _("Posts")
+        ordering = ["-created_on"]
+        get_latest_by = ["-created_on"]
+
 
 """
 class PostCategory(models.Model):

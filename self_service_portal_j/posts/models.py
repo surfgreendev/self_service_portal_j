@@ -1,11 +1,13 @@
 import os
 import sys
 
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 from taggit.managers import TaggableManager
 
+User = get_user_model()
 
 # Create your models here.
 class PostCategory(models.Model):
@@ -62,6 +64,9 @@ class Post(models.Model):
         max_length=None,
         blank=True,
         null=True,
+    )
+    author = models.ForeignKey(
+        User, verbose_name=_("Autor"), on_delete=models.CASCADE, blank=True, null=True
     )
     content = models.TextField(_("Blog Inhalt"), blank=True, null=True)
     slug = models.SlugField(

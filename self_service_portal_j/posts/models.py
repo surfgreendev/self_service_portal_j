@@ -56,6 +56,10 @@ class Post(models.Model):
         ordering = ["-created_on"]
         get_latest_by = ["-created_on"]
 
+    def __str__(self):
+        # return str(self.pk) + "-" + self.title
+        return "{} - {}".format(self.pk, self.title)
+
 
 """
 class PostCategory(models.Model):

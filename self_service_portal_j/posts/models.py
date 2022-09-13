@@ -59,6 +59,8 @@ class Post(models.Model):
         height_field=None,
         width_field=None,
         max_length=None,
+        blank=True,
+        null=True,
     )
     content = models.TextField(_("Blog Inhalt"), blank=True, null=True)
     slug = models.SlugField(

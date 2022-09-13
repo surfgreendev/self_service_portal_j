@@ -2,6 +2,7 @@ import os
 import sys
 
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext as _
 
 
@@ -59,6 +60,10 @@ class Post(models.Model):
     def __str__(self):
         # return str(self.pk) + "-" + self.title
         return "{} - {}".format(self.pk, self.title)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
 
 
 """

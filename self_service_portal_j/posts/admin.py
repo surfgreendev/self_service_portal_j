@@ -30,7 +30,7 @@ class PostAdmin(admin.ModelAdmin):
     def image_tag(self, obj):
         from django.utils.html import mark_safe
 
-        if obj:
+        if obj.image:
             return mark_safe("<img width='150px' src='{}' />".format(obj.image.url))
         else:
             return ""

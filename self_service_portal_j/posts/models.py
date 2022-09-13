@@ -90,11 +90,6 @@ class Post(models.Model):
         self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
 
-    def image_tag(self):
-        from django.utils.html import mark_safe
-
-        return mark_safe("<img src='{}' />".format(self.image.path))
-
 
 """
 class PostCategory(models.Model):

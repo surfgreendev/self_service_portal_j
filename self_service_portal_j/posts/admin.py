@@ -16,6 +16,7 @@ class PostAdmin(admin.ModelAdmin):
         "title",
         "status",
         "category",
+        "author",
         "slug",
         "image",
         "image_tag",

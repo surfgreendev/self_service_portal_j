@@ -3,13 +3,38 @@ import sys
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 from taggit.managers import TaggableManager
 
+from self_service_portal_j.posts.managers import PostManager
+
 User = get_user_model()
 
 # Create your models here.
+class PostImages(models.Model):
+    title = models.CharField(_("Titel"), max_length=250)
+    alt_text = models.TextField(_("Bschreibung"), blank=True, null=True)
+
+    image = models.ImageField(
+        _("Bild"),
+        upload_to="blog/images",
+        height_field=None,
+        width_field=None,
+        max_length=None,
+    )
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Post Bild")
+        verbose_name_plural = _("Post Bilder")
+
+    def __str__(self):
+        return "{} - {}".format(self.pk, self.title)
+
+
 class PostCategory(models.Model):
     title = models.CharField(_("Titel"), max_length=250)
     description = models.TextField(_("Bschreibung"), blank=True, null=True)
@@ -95,7 +120,13 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+
+        if self.status == self.PostStatus.PUBLISHED:
+            self.published_on = timezone.now()
+
         super(Post, self).save(*args, **kwargs)
+
+    objects = PostManager()
 
 
 """

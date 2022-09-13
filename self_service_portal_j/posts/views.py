@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from django.views.generic import CreateView
 
-# Create your views here.
+from self_service_portal_j.posts.models import Post
+
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ["status", "title", "sub_title", "content", "tags"]

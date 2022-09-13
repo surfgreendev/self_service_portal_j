@@ -1,7 +1,13 @@
 from django.contrib import admin
 
 # Register your models here.
-from self_service_portal_j.posts.models import Post, PostCategory
+from self_service_portal_j.posts.models import Post, PostCategory, PostImages
+
+
+class PostImagesInline(admin.TabularInline):
+    model = PostImages
+    fields = ["title", "alt_text", "image"]
+    extra = 1
 
 
 @admin.register(PostCategory)
@@ -11,6 +17,7 @@ class PostCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    inlines = [PostImagesInline]
     list_display = [
         "id",
         "title",

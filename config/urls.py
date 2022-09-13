@@ -18,6 +18,7 @@ urlpatterns = [
     path("users/", include("self_service_portal_j.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("posts/", include("self_service_portal_j.posts.urls", namespace="posts")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS

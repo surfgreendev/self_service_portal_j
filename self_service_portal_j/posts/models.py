@@ -14,22 +14,6 @@ from self_service_portal_j.posts.managers import PostManager
 User = get_user_model()
 
 
-class PostComment(models.Model):
-    title = models.CharField(_("Titel"), max_length=250)
-    comment = models.TextField(_("Kommentar"))
-
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = _("Kommentar")
-        verbose_name_plural = _("Kommentare")
-        ordering = ["-created_on"]
-
-    def __str__(self):
-        return "{} - {}".format(self.pk, self.title)
-
-
 class PostCategory(models.Model):
     title = models.CharField(_("Titel"), max_length=250)
     description = models.TextField(_("Bschreibung"), blank=True, null=True)
@@ -148,6 +132,25 @@ class PostImages(models.Model):
     class Meta:
         verbose_name = _("Post Bild")
         verbose_name_plural = _("Post Bilder")
+
+    def __str__(self):
+        return "{} - {}".format(self.pk, self.title)
+
+
+class PostComment(models.Model):
+    post = models.ForeignKey(
+        Post, verbose_name=_("Post"), on_delete=models.CASCADE, blank=True, null=True
+    )
+    title = models.CharField(_("Titel"), max_length=250)
+    comment = models.TextField(_("Kommentar"))
+
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Kommentar")
+        verbose_name_plural = _("Kommentare")
+        ordering = ["-created_on"]
 
     def __str__(self):
         return "{} - {}".format(self.pk, self.title)

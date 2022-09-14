@@ -1,11 +1,10 @@
 <h1>Hello World</h1>
 
-
 <div>
-    <form action="">
+    <form action="{% url 'posts:create' %}" method="post">
+        {% csrf_token %}
         {{ form.as_p }}
-        <input type="button" value="Submit">
+        <input type="submit" value="Speichern">
     </form>
 </div>
-
 

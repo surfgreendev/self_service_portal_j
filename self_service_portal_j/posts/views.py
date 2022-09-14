@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from self_service_portal_j.posts.models import Post, PostCategory
 
@@ -12,3 +12,8 @@ class PostCreateView(CreateView):
 class PostCategoryCreateView(CreateView):
     model = PostCategory
     fields = ["title", "description"]
+
+
+class PostListView(ListView):
+    model = Post
+    queryset = Post.objects.all()  # published()

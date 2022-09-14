@@ -3,6 +3,7 @@ import sys
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
@@ -103,6 +104,9 @@ class Post(models.Model):
             self.published_on = timezone.now()
 
         super(Post, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("posts:list")
 
     objects = PostManager()
 

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>{{ post.title }}</h1>
+        <p class="lead">
+
+            {{ post.content }}
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>{% trans "Kommentare" %}</h3>
+    </div>
+</div>
+{% endblock content %}

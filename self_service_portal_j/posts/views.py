@@ -1,10 +1,24 @@
+import logging
+
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
-from django.utils.translation import ugettext_lazy as _
-from django.views.generic import CreateView, ListView
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.utils.translation import gettext as _
+from django.views.generic import CreateView, ListView, View
 
 from self_service_portal_j.posts.forms import PostCreateForm
 from self_service_portal_j.posts.models import Post, PostCategory
+
+logger = logging.getLogger("__name__")
+
+
+class PostDetailView(View):
+    def get(self, request, *args, **kwargs):
+        logger.debug("Request received %s" % request.user)
+        post = get_object_or_404(Post, pk=self.kwargs["pk"])
+
+        logger.debug("Requested post is %s" % post.title)
+        return render(request, "posts/post_detail.html", {"post": post})
 
 
 class PostCreateView(SuccessMessageMixin, CreateView):

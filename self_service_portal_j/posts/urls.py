@@ -3,6 +3,7 @@ from django.urls import path
 from self_service_portal_j.posts.views import (
     PostCategoryCreateView,
     PostCreateView,
+    PostDetailView,
     PostListView,
 )
 
@@ -16,4 +17,5 @@ urlpatterns = [
         name="category-create",
     ),
     path("overview/", view=PostListView.as_view(), name="list"),
+    path("detail/<int:pk>/", view=PostDetailView.as_view(), name="detail"),
 ]

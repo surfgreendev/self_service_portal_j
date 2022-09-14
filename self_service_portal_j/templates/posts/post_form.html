@@ -16,11 +16,7 @@
 <div>
     <form action="{% url 'posts:create' %}" method="post">
         {% csrf_token %}
-        
         {% crispy form %}
-        
-        
-        
     </form>
 </div>
 

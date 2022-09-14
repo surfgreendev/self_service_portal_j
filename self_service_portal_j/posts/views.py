@@ -1,14 +1,16 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, ListView
 
 from self_service_portal_j.posts.forms import PostCreateForm
 from self_service_portal_j.posts.models import Post, PostCategory
 
 
-class PostCreateView(CreateView):
+class PostCreateView(SuccessMessageMixin, CreateView):
     model = Post
-    # fields = ["status", "title", "sub_title", "content", "tags"]
     form_class = PostCreateForm
+    success_message = _("Blog Post erfolgreich erstellt.")
 
 
 class PostCategoryCreateView(CreateView):

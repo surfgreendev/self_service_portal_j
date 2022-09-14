@@ -16,4 +16,4 @@ class PostCategoryCreateView(CreateView):
 
 class PostListView(ListView):
     model = Post
-    queryset = Post.objects.all()  # published()
+    queryset = Post.objects.select_related("category").all()

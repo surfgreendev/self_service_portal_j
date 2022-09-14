@@ -1,10 +1,27 @@
-<h1>Hello World</h1>
+{% extends 'base.html' %}
+{% load i18n static crispy_forms_tags %}
+
+{% block title %}
+    {% trans "Blog Post erstellen" %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>{% trans "Post hinzufuegen" %}</h2>
+    </div>
+   
+</div>
 
 <div>
     <form action="{% url 'posts:create' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Speichern">
+        
+        {% crispy form %}
+        
+        
+        
     </form>
 </div>
 
+{% endblock content %}

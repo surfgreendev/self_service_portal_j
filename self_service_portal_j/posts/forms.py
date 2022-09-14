@@ -21,6 +21,10 @@ class PostCreateForm(forms.ModelForm):
 
 
 class PostCommentCreateForm(forms.ModelForm):
+    post = forms.ModelChoiceField(
+        queryset=Post.objects.all(), widget=forms.HiddenInput()
+    )
+
     class Meta:
         model = PostComment
         fields = ["post", "title", "comment"]

@@ -8,6 +8,7 @@ from django.views.generic import CreateView, ListView, View
 
 from self_service_portal_j.posts.forms import PostCommentCreateForm, PostCreateForm
 from self_service_portal_j.posts.models import Post, PostCategory, PostComment
+from self_service_portal_j.posts.tasks import send_list_of_blog_posts
 
 logger = logging.getLogger("__name__")
 
@@ -56,6 +57,24 @@ class PostCreateView(SuccessMessageMixin, CreateView):
     model = Post
     form_class = PostCreateForm
     success_message = _("Blog Post erfolgreich erstellt.")
+
+    def render_to_response(self, context, **response_kwargs):
+        """
+        Return a response, using the `response_class` for this view, with a
+        template rendered with the given context.
+        Pass response_kwargs to the constructor of the response class.
+        """
+        response_kwargs.setdefault("content_type", self.content_type)
+        send_list_of_blog_posts.delay()
+
+        logger.debug("Render to Response")
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+        )
 
 
 class PostCategoryCreateView(CreateView):

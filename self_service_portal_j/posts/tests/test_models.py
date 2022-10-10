@@ -23,9 +23,10 @@ class TestPostModel(TestCase):
         self.assertEqual(self.post.pk, Post.objects.get(id=self.post.pk).pk)
         self.assertEqual(self.post.title, Post.objects.get(id=self.post.pk).title)
 
+    # __str__()
     def test_post_str_method(self):
         self.assertEqual(
-            str(self.post), "{} - {}".format(self.post.pk, self.post.title)
+            self.post.__str__(), "{} - {}".format(self.post.pk, self.post.title)
         )
 
     def test_post_slugify(self):

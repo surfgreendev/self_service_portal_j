@@ -65,7 +65,6 @@ class PostCreateView(SuccessMessageMixin, CreateView):
         Pass response_kwargs to the constructor of the response class.
         """
         response_kwargs.setdefault("content_type", self.content_type)
-        send_list_of_blog_posts.delay()
 
         logger.debug("Render to Response")
         return self.response_class(
@@ -75,6 +74,18 @@ class PostCreateView(SuccessMessageMixin, CreateView):
             using=self.template_engine,
             **response_kwargs
         )
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
+        if form.is_valid():
+            send_list_of_blog_posts.apply_async(countdown=3)
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class PostCategoryCreateView(CreateView):

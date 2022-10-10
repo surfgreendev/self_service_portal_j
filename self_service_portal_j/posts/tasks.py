@@ -22,3 +22,15 @@ def send_list_of_blog_posts():
         ["to@example.org"],
         fail_silently=False,
     )
+
+
+@celery_app.task()
+def send_marketing_report_periodically():
+    logger.info("Hello World")
+    send_mail(
+        "Marketing Report",
+        "Hello World",
+        "from@example.org",
+        ["to@example.org"],
+        fail_silently=False,
+    )
